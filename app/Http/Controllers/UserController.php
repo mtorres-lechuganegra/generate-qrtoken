@@ -59,12 +59,12 @@ class UserController extends Controller
     {
         $user = (new UserService)->show($dni);
 
-        $userItems = $user->userItems()->with('entity')->paginate();
+        $userEntities = $user->userItems()->with('entity')->paginate();
 
-        $userItems = $userItems->getCollection()->map(function ($userItem) {
+        $userEntities = $userEntities->getCollection()->map(function ($userEntity) {
             return array_merge(
-                $userItem->item->toArray(),
-                ['entity_type' => $userItem->entity_type]);
+                $userEntity->entity->toArray(),
+                ['entity_type' => $userEntity->entity_type]);
         });
 
         if (!$user) {
@@ -73,6 +73,6 @@ class UserController extends Controller
             ], 404);
         }
 
-        return $userItems;
+        return $userEntities;
     }
 }
