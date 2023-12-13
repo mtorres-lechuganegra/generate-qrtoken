@@ -24,7 +24,7 @@ class UserController extends Controller
             ], 404);
         }
 
-        return $user->only(['dni', 'name', 'email']);
+        return $user->only(['dni', 'first_name', 'last_name', 'email', 'has_filled_profile']);
     }
 
    /**
@@ -35,7 +35,7 @@ class UserController extends Controller
         $user = (new UserService)->store($request->validated());
 
         return response()->json([
-            'user' => $user->only(['dni', 'name', 'email']),
+            'user' => $user->only(['dni', 'first_name', 'last_name', 'email', 'has_filled_profile']),
         ], 201);
     }
 
@@ -52,7 +52,7 @@ class UserController extends Controller
             ], 404);
         }
 
-        return $user->only(['dni', 'name', 'email']);
+        return $user->only(['dni', 'first_name', 'last_name', 'email', 'has_filled_profile']);
     }
 
     public function getItems(string $dni)

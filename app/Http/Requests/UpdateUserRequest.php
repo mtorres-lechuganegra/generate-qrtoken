@@ -23,7 +23,9 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'dni' => 'required|numeric|digits:8|exists:users,dni',
-            'name' => 'nullable|string',
+            'first_name' => 'nullable|string',
+            'last_name' => 'nullable|string',
+            'phone' => 'nullable|string',
             'email' => 'nullable|email|unique:users,email' . ($this->get('dni') ? ','.$this->get('dni').',dni' : ''),
             'password' => 'nullable|string',
         ];
