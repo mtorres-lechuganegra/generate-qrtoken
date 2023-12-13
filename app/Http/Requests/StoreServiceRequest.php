@@ -23,7 +23,7 @@ class StoreServiceRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'sku' => 'required|string|max:100|unique:services,sku',
+            'code' => 'required|string|max:100|unique:services,code',
         ];
     }
 }

@@ -23,7 +23,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'sku' => 'required|string|max:100|unique:products,sku' . $this->route('product')->id,
+            'code' => 'required|string|max:100|unique:products,code' . $this->route('product')->id,
         ];
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index();
-            $table->string('sku', 100)->unique()->index();
+            $table->string('code', 100)->unique()->index();
             $table->timestamps();
         });
     }

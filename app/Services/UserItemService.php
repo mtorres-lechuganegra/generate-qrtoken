@@ -8,7 +8,7 @@ use Throwable;
 
 final class UserItemService
 {
-    public function create(string $userDni, string $itemSku, string $itemType): bool
+    public function create(string $userDni, string $itemCode, string $itemType): bool
     {
         try {
             $user = (new UserService())->show($userDni);
@@ -23,7 +23,7 @@ final class UserItemService
                 return false;
             }
 
-            $item = $itemClass::query()->where('sku', $itemSku)->first();
+            $item = $itemClass::query()->where('code', $itemCode)->first();
 
             if (!$item) {
                 return false;

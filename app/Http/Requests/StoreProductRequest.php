@@ -23,7 +23,7 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'sku' => 'required|string|max:100|unique:products,sku',
+            'code' => 'required|string|max:100|unique:products,code',
         ];
     }
 }

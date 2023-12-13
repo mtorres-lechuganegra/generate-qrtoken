@@ -32,7 +32,7 @@ class UserItemController extends Controller
     {
         $userItem = (new UserItemService())->create(
             $request->user_dni,
-            $request->entity_sku,
+            $request->entity_code,
             $request->entity_type
         );
 

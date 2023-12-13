@@ -24,7 +24,7 @@ class AssignItemToUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'entity_sku' => 'required|string',
+            'entity_code' => 'required|string',
             'entity_type' => 'required|string|in:' . implode(',', ['product', 'service']),
             'user_dni' => 'required|numeric|digits:8',
         ];
