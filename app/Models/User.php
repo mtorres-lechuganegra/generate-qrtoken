@@ -51,4 +51,19 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Token::class, UserToken::class, 'user_id', 'id', 'id', 'token_id');
     }
+
+    public function userItems()
+    {
+        return $this->hasMany(UserItem::class);
+    }
+
+    public function products()
+    {
+        return $this->morphedByMany(Product::class, 'entity', 'user_items', 'user_id', 'entity_id');
+    }
+
+    public function services()
+    {
+        return $this->morphedByMany(Service::class, 'entity', 'user_items', 'user_id', 'entity_id');
+    }
 }

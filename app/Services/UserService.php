@@ -6,6 +6,13 @@ use App\Models\User;
 
 final class UserService
 {
+    public function show(string $userDni): ?User
+    {
+        $user = User::where('dni', $userDni)->first();
+
+        return $user;
+    }
+
     public function store($data): User
     {
         $user = User::create($data);

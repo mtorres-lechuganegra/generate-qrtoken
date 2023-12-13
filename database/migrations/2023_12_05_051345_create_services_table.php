@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Token;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tokens', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('value', Token::TOKEN_LENGTH)->unique();
-            $table->morphs('entity');
-            $table->unique(['entity_id', 'entity_type']);
+            $table->string('name')->index();
+            $table->string('sku', 100)->unique()->index();
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tokens');
+        Schema::dropIfExists('services');
     }
 };

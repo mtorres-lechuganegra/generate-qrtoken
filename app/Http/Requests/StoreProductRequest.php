@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTokenRequest extends FormRequest
+class StoreProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class StoreTokenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'entity_id' => 'required|numeric',
-            'entity_type' => 'required|string|in:' . implode(',', ['product', 'service']),
+            'name' => 'required|string',
+            'sku' => 'required|string|max:100|unique:products,sku',
         ];
     }
 }

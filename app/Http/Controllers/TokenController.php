@@ -15,8 +15,19 @@ class TokenController extends Controller
      */
     public function store(StoreTokenRequest $request)
     {
+        $token = (new TokenService())->store(
+            $request->entity_type,
+            $request->entity_id
+        );
+
+        if (!$token) {
+            return response()->json([
+                'message' => 'Could not create token',
+            ], 400);
+        }
+
         return response()->json([
-            'token' => (new TokenService())->store(),
+            'token' => $token,
         ]);
     }
 

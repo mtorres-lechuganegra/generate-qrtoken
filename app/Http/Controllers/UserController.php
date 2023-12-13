@@ -5,12 +5,29 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use App\Models\UserItem;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
+     /**
+     * Display the specified resource.
+     */
+    public function showByDni(string $dni)
+    {
+        $user = (new UserService)->show($dni);
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found',
+            ], 404);
+        }
+
+        return $user->only(['dni', 'name', 'email']);
+    }
+
+   /**
      * Store a newly created resource in storage.
      */
     public function store(StoreUserRequest $request)
@@ -36,5 +53,26 @@ class UserController extends Controller
         }
 
         return $user->only(['dni', 'name', 'email']);
+    }
+
+    public function getItems(string $dni)
+    {
+        $user = (new UserService)->show($dni);
+
+        $userItems = $user->userItems()->with('entity')->paginate();
+
+        $userItems = $userItems->getCollection()->map(function ($userItem) {
+            return array_merge(
+                $userItem->item->toArray(),
+                ['entity_type' => $userItem->entity_type]);
+        });
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found',
+            ], 404);
+        }
+
+        return $userItems;
     }
 }

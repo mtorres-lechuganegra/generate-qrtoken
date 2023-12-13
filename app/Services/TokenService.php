@@ -5,21 +5,39 @@ namespace App\Services;
 use App\Models\Token;
 use App\Models\User;
 use App\Models\UserToken;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Str;
 use Throwable;
 
 final class TokenService
 {
-    public function store(): string
+    public function store(string $itemType, int $itemId): ?string
     {
         $token = self::generateToken();
 
-        Token::create([
-            'value' => $token,
-        ]);
+        $itemClass = Relation::getMorphedModel($itemType);
 
-        return $token;
+        if (!$itemClass) {
+            return null;
+        }
+
+        $item = $itemClass::query()->find($itemId);
+
+        if (!$item) {
+            return null;
+        }
+
+        try {
+            Token::create([
+                'value' => $token,
+                'entity_id' => $itemId,
+                'entity_type' => $itemType,
+            ]);
+            return $token;
+        } catch (UniqueConstraintViolationException $th) {
+            return null;
+        }
     }
 
     public function assignTokenToUser($userDni, $token): bool
