@@ -30,17 +30,11 @@ class UserItemController extends Controller
      */
     public function store(AssignItemToUserRequest $request)
     {
-        $userItem = (new UserItemService())->create(
+        (new UserItemService())->create(
             $request->user_dni,
             $request->entity_code,
             $request->entity_type
         );
-
-        if (!$userItem) {
-            return response()->json([
-                'message' => 'Could not assign item to user',
-            ], 400);
-        }
 
         return response()->json([
             'message' => 'User item created successfully',

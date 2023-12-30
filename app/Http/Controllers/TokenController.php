@@ -20,15 +20,9 @@ class TokenController extends Controller
             $request->entity_id
         );
 
-        if (!$token) {
-            return response()->json([
-                'message' => 'Could not create token',
-            ], 400);
-        }
-
         return response()->json([
             'token' => $token,
-        ]);
+        ], 201);
     }
 
     /**

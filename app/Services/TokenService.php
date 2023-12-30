@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Exceptions\EntityException;
+use App\Exceptions\TokenException;
 use App\Models\Token;
 use App\Models\User;
 use App\Models\UserToken;
@@ -19,13 +21,13 @@ final class TokenService
         $itemClass = Relation::getMorphedModel($itemType);
 
         if (!$itemClass) {
-            return null;
+            throw EntityException::invalidEntity($itemType);
         }
 
         $item = $itemClass::query()->find($itemId);
 
         if (!$item) {
-            return null;
+            throw EntityException::entityNotFound();
         }
 
         try {
@@ -36,7 +38,7 @@ final class TokenService
             ]);
             return $token;
         } catch (UniqueConstraintViolationException $th) {
-            return null;
+            throw TokenException::entityAlreadyHasToken();
         }
     }
 

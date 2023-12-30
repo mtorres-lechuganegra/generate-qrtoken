@@ -22,11 +22,11 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dni' => 'required|numeric|digits:8|exists:users,dni',
+            'dni' => 'required|numeric|digits:8',
             'first_name' => 'nullable|string',
             'last_name' => 'nullable|string',
             'phone' => 'nullable|string',
-            'email' => 'nullable|email|unique:users,email' . ($this->get('dni') ? ','.$this->get('dni').',dni' : ''),
+            'email' => 'nullable|email',
             'password' => 'nullable|string',
         ];
     }
